@@ -58,10 +58,21 @@ class Session(APIResource):
         return http_client.get(url="sessions/customerData", params={"sessionToken": sessionToken})
 
     @staticmethod
-    def transfer_token(http_client: HTTPClient, transferToken: str) -> any:
+    def create_transfer_token(http_client: HTTPClient, sessionToken: str) -> any:
+        """
+        Create a new transferToken from a sessionToken
+        :param sessionToken: The session token used to create the transfer token
+        :return: The transferToken
+        """
+        print('about to request token:')
+        print(sessionToken)
+        return http_client.post(url="sessions/transferToken", data={"customerSession": sessionToken})
+
+    @staticmethod
+    def convert_transfer_token(http_client: HTTPClient, transferToken: str) -> any:
         """
         Convert a transferToken into a sessionToken
         :param transferToken: The trasfer token to convert
         :return: The sessionToken
         """
-        return http_client.get(url="sessions/transferToken", params={"transferToken": sessionToken})
+        return http_client.get(url="sessions/transferToken", params={"transferToken": transferToken})
