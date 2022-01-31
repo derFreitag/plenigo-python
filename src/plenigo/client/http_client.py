@@ -108,6 +108,7 @@ class HTTPClient(abc.ABC):
 
         while True:
             try:
+                util.log_message(LogLevel.DEBUG, "Plenigo request: %s %s" % (method, url))
                 headers = self._add_authorization_header(headers)
                 result = requests.request(method, url, headers=headers, json=data, timeout=self._timeout, params=params)
                 content = result.content

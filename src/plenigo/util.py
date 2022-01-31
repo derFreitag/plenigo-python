@@ -16,7 +16,6 @@ logger = logging.getLogger("plenigo")
 
 def log_message(log_level: LogLevel, message: str):
     if log_level == LogLevel.DEBUG:
-        print(message, file=sys.stderr)
         logger.debug(message)
     elif log_level == LogLevel.INFO:
         logger.info(message)
