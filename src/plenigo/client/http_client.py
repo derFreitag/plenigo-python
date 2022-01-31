@@ -109,6 +109,7 @@ class HTTPClient(abc.ABC):
         while True:
             try:
                 headers = self._add_authorization_header(headers)
+                util.log_message(LogLevel.DEBUG, "Making plenigo request: %s %s %s %s" % (method, url, json.dumps(params), json.dumps(data)))
                 result = requests.request(method, url, headers=headers, json=data, timeout=self._timeout, params=params)
                 content = result.content
                 status_code = result.status_code
