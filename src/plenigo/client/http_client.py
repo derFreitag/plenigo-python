@@ -7,11 +7,15 @@ from enum import Enum
 from typing import Dict, Optional
 from urllib import parse
 
+import logging
 import requests
 
 from plenigo import util
 from plenigo.error import PlenigoError
 from plenigo.util import LogLevel
+
+
+logger = logging.getLogger()
 
 
 class HTTPClient(abc.ABC):
@@ -109,6 +113,9 @@ class HTTPClient(abc.ABC):
         while True:
             try:
                 headers = self._add_authorization_header(headers)
+                logger.debug('Request data - method: {0}; url: {1}'.format(method, url))
+                logger.warning('Request data - method: {0}; url: {1}'.format(method, url))
+                logger.info('Request data - method: {0}; url: {1}'.format(method, url))
                 result = requests.request(method, url, headers=headers, json=data, timeout=self._timeout, params=params)
                 content = result.content
                 status_code = result.status_code
