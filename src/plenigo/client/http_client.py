@@ -113,9 +113,7 @@ class HTTPClient(abc.ABC):
         while True:
             try:
                 headers = self._add_authorization_header(headers)
-                logger.debug('Request data - method: {0}; url: {1}'.format(method, url))
-                logger.warning('Request data - method: {0}; url: {1}'.format(method, url))
-                logger.info('Request data - method: {0}; url: {1}'.format(method, url))
+                logger.warning('Request data - method: {0}; url: {1} json: {2} params: {3}'.format(method, url, data, params))
                 result = requests.request(method, url, headers=headers, json=data, timeout=self._timeout, params=params)
                 content = result.content
                 status_code = result.status_code
