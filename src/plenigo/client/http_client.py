@@ -115,6 +115,7 @@ class HTTPClient(abc.ABC):
                 headers = self._add_authorization_header(headers)
                 logger.warning('Request data - method: {0}; url: {1} json: {2} params: {3}'.format(method, url, data, params))
                 result = requests.request(method, url, headers=headers, json=data, timeout=self._timeout, params=params)
+                logger.warning('Response: code: {0} data: {1}'.format(result.status_code, result.json())
                 content = result.content
                 status_code = result.status_code
                 connection_error = None
