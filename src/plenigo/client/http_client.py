@@ -113,14 +113,14 @@ class HTTPClient(abc.ABC):
         while True:
             try:
                 headers = self._add_authorization_header(headers)
-                logger.warning('Request data - method: {0}; url: {1} json: {2} params: {3}'.format(method, url, data, params))
                 result = requests.request(method, url, headers=headers, json=data, timeout=self._timeout, params=params)
-                logger.warning('Response: code: {0} data: {1}'.format(result.status_code, result.json()))
                 content = result.content
                 status_code = result.status_code
                 connection_error = None
                 if status_code >= 400:
                     error_data = json.loads(content.decode("utf-8"), object_pairs_hook=OrderedDict)
+                    logger.warning('Request data - method: {0}; url: {1} json: {2} params: {3}'.format(method, url, data, params))
+                    logger.warning('Response: code: {0} data: {1}'.format(result.status_code, result.json()))
                     raise PlenigoError(status_code, error_code=error_data["errorCode"], error_message=error_data["errorMessage"])
             except PlenigoError as error:
                 raise error
